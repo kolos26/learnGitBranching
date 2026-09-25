@@ -1881,7 +1881,7 @@ exports.strings = {
   ///////////////////////////////////////////////////////////////////////////
   'shrink-goal-button': {
     '__desc__': 'button label to smaller goal',
-    'en_US': 'Shring goal window',
+    'en_US': 'Shrink goal window',
     'hu'   : 'Cél összenyomása'
   },
   ///////////////////////////////////////////////////////////////////////////
