@@ -25,12 +25,15 @@ var NextLevelConfirm = require('../views').NextLevelConfirm;
 var LevelToolbarView = require('../react_views/LevelToolbarView.jsx');
 
 var TreeCompare = require('../graph/treeCompare');
+const { func } = require('prop-types');
 
 var regexMap = {
   'help level': /^help level$/,
   'start dialog': /^start dialog$/,
   'show goal': /^(show goal|goal|help goal)$/,
   'hide goal': /^hide goal$/,
+  'shrink goal': /^shrink goal$/,
+  'expand goal': /^expand goal$/,
   'show solution': /^show solution($|\s)/,
   'objective': /^(objective|assignment)$/
 };
@@ -673,6 +676,8 @@ var Level = Sandbox.extend({
     var methodMap = {
       'show goal': this.showGoal,
       'hide goal': this.hideGoal,
+      'shrink goal': this.shrinkGoal,
+      'expand goal': this.expandGoal,
       'show solution': this.showSolution,
       'start dialog': this.startDialog,
       'help level': this.startDialog,
@@ -687,14 +692,25 @@ var Level = Sandbox.extend({
   },
 
   toggleSize: function () {
-    if (this.goalWindowSize.width == 1000){ // big->small
-      this.isWidthSmall = true;
-      this.setGoalWindowSize(400, 750);
+    if (this.goalWindowSize.width == 400){ // small->big
+      this.expandGoal();
     } else {
-      this.isWidthSmall = false;
-      this.setGoalWindowSize(1000, this.goalWindowSize.height);
+      this.shrinkGoal();
     }
+  },
+
+  shrinkGoal: function (command, defer) {
+    this.isWidthSmall = true;
+    this.setGoalWindowSize(400, 750);
     this.trigger('goalSizeToggled');
+    if (command) { command.finishWith(defer); }
+  },
+
+  expandGoal: function (command, defer) {
+    this.isWidthSmall = false;
+    this.setGoalWindowSize(1000, 750);
+    this.trigger('goalSizeToggled');
+    if (command) { command.finishWith(defer); }
   },
 
   setGoalWindowSize: function(width, height) {
