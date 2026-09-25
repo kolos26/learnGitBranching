@@ -48,13 +48,14 @@ var Level = Sandbox.extend({
     this.solved = false;
     this.wasResetAfterSolved = false;
 
-    this.initGoalData(options);
-    this.setGoalWindowSize(400, 750);
-    this.initName(options);
     this.on('minimizeCanvas', this.minimizeGoal);
     this.on('resizeCanvas', this.resizeGoal);
     this.isGoalExpanded = false;
     this.isWidthSmall = true;
+
+    this.initGoalData(options);
+    this.setGoalWindowSize(400, 750);
+    this.initName(options);
 
     Level.__super__.initialize.apply(this, [options]);
     this.startOffCommand();
