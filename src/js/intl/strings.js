@@ -1879,6 +1879,18 @@ exports.strings = {
     'hu'   : 'Cél elrejtése'
   },
   ///////////////////////////////////////////////////////////////////////////
+  'shrink-goal-button': {
+    '__desc__': 'button label to smaller goal',
+    'en_US': 'Shring goal window',
+    'hu'   : 'Cél összenyomása'
+  },
+  ///////////////////////////////////////////////////////////////////////////
+  'expand-goal-button': {
+    '__desc__': 'button label to smaller goal',
+    'en_US': 'Expand goal window',
+    'hu'   : 'Cél kinagyítása'
+  },
+  ///////////////////////////////////////////////////////////////////////////
   'objective-button': {
     '__desc__': 'button label to show objective',
     'en_US': 'Instructions',

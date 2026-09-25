@@ -49,10 +49,12 @@ var Level = Sandbox.extend({
     this.wasResetAfterSolved = false;
 
     this.initGoalData(options);
+    this.setGoalWindowSize(400, 750);
     this.initName(options);
     this.on('minimizeCanvas', this.minimizeGoal);
     this.on('resizeCanvas', this.resizeGoal);
     this.isGoalExpanded = false;
+    this.isWidthSmall = true;
 
     Level.__super__.initialize.apply(this, [options]);
     this.startOffCommand();
@@ -63,6 +65,10 @@ var Level = Sandbox.extend({
 
   getIsGoalExpanded: function() {
     return this.isGoalExpanded;
+  },
+
+  getIsWidthSmall: function() {
+    return this.isWidthSmall;
   },
 
   handleOpen: function(deferred) {
@@ -145,6 +151,7 @@ var Level = Sandbox.extend({
       {
         name: name,
         onGoalClick: this.toggleGoal.bind(this),
+        onGoalSizeClick: this.toggleSize.bind(this),
         onObjectiveClick: this.toggleObjective.bind(this),
         parent: this
       }
@@ -676,6 +683,24 @@ var Level = Sandbox.extend({
     }
 
     method.apply(this, [command, defer]);
+  },
+
+  toggleSize: function () {
+    if (this.goalWindowSize.width == 1000){ // big->small
+      this.isWidthSmall = true;
+      this.setGoalWindowSize(400, 750);
+    } else {
+      this.isWidthSmall = false;
+      this.setGoalWindowSize(1000, this.goalWindowSize.height);
+    }
+    this.trigger('goalSizeToggled');
+  },
+
+  setGoalWindowSize: function(width, height) {
+    this.goalWindowSize = { width: width, height: height };
+    if (this.goalCanvasHolder && this.goalCanvasHolder.inDom) {
+      this.goalCanvasHolder.restore(this.goalWindowPos, this.goalWindowSize);
+    }
   }
 });
 

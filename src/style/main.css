@@ -335,7 +335,7 @@ div.inside  pre {
 }
 
 div.canvasTerminalHolder > div.terminal-window-holder {
-  max-width: 400px;
+  max-width: 1000px;
   min-width: 400px;
   overflow: visible !important;
 }

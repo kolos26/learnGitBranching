@@ -10,7 +10,8 @@ class LevelToolbarView extends React.Component {
     super(props, context);
     this.state = {
       isHidden: true,
-      isGoalExpanded: this.props.parent.getIsGoalExpanded()
+      isGoalExpanded: this.props.parent.getIsGoalExpanded(),
+      isWidthSmall: this.props.parent.getIsWidthSmall()
     };
   }
 
@@ -32,6 +33,16 @@ class LevelToolbarView extends React.Component {
         isGoalExpanded: this.props.parent.getIsGoalExpanded()
       });
     }.bind(this));
+
+    this.props.parent.on('goalSizeToggled', function() {
+      if (!this._isMounted) {
+        return;
+      }
+      this.setState({
+        isWidthSmall: this.props.parent.getIsWidthSmall()
+      });
+    }.bind(this));
+
   }
 
   render() {
@@ -63,6 +74,14 @@ class LevelToolbarView extends React.Component {
                 intl.str('hide-goal-button') :
                 intl.str('show-goal-button')
               }
+            </button><br/>
+            <button
+              onClick={this.props.onGoalSizeClick}
+              type="button">
+              {this.state.isWidthSmall ?
+                intl.str('expand-goal-button') :
+                intl.str('shrink-goal-button')
+              }
             </button>
           </div>
           <div className="showObjectiveWrapper">
@@ -82,6 +101,7 @@ class LevelToolbarView extends React.Component {
 LevelToolbarView.propTypes = {
   name: PropTypes.string.isRequired,
   onGoalClick: PropTypes.func.isRequired,
+  onGoalSizeClick: PropTypes.func.isRequired,
   onObjectiveClick: PropTypes.func.isRequired,
   parent: PropTypes.object.isRequired
 }
